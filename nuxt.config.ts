@@ -22,7 +22,8 @@ export default defineNuxtConfig({
     // '@nuxtjs/eslint-module', //谨慎开启，会报错很多地方，主要用来检查一些函数是否用值,或者console，建议开发完之后使用
     '@nuxtjs/svg-sprite',
     '@pinia-plugin-persistedstate/nuxt',
-    '@nuxt/image'
+    '@nuxt/image',
+    '@element-plus/nuxt'
   ],
 
   /* 配置跨域代理 */
@@ -47,7 +48,7 @@ export default defineNuxtConfig({
   /* 设置seo */
   app: {
     head: {
-      title: '标题...',
+      title: '个人博客后台管理系统',
       meta: [
         /* seo搜索引擎关键词 */
         /* { name:'keywords',content:'关键词....'} */
