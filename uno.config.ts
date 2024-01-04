@@ -10,7 +10,8 @@ import {
 
 export default defineConfig({
   shortcuts: {
-   "flex-default":'flex justify-center items-center'
+    'flex-default': 'flex justify-center items-center',
+    'border-default': 'border-solid border-1'
   },
   presets: [presetUno(), presetAttributify(), presetIcons(), presetTypography()],
   transformers: [transformerDirectives(), transformerVariantGroup()]

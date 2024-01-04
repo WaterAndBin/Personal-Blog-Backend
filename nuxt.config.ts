@@ -90,6 +90,7 @@ export default defineNuxtConfig({
 
   /* 打包去除console.log等，开发者可以尽情写console.log */
   vite: {
+    envDir: '~/env', // 指定env文件夹
     esbuild: {
       drop: ['debugger'],
       pure: ['console.log', 'console.error', 'console.warn', 'console.debug', 'console.trace']
@@ -99,6 +100,6 @@ export default defineNuxtConfig({
   elementPlus: {
     icon: 'ElIcon',
     importStyle: 'scss',
-    themes: ['dark'],
-  },
+    themes: ['dark']
+  }
 });
