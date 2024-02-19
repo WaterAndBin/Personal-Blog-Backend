@@ -4,13 +4,6 @@ const { isCollapse } = useAside();
 /* 标题 */
 const hidden = ref<boolean>(false);
 
-const handleOpen = (key: string, keyPath: string[]): void => {
-  console.log(key, keyPath);
-};
-const handleClose = (key: string, keyPath: string[]): void => {
-  console.log(key, keyPath);
-};
-
 const showTitle = (): boolean => {
   setTimeout((): void => {
     hidden.value = !isCollapse.value;
@@ -31,21 +24,11 @@ const showTitle = (): boolean => {
     <div>
       <el-menu
         default-active="2"
-        class="el-menu-vertical-demo"
+        class="w-50 overflow-hidden"
         :collapse="isCollapse"
-        @open="handleOpen"
-        @close="handleClose"
+        :router="true"
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><ElIconIceCream /></el-icon>
-            <span>Navigator One</span>
-          </template>
-          <el-menu-item-group>
-            <template #title><span>Group One</span></template>
-            <el-menu-item index="1-1">item one</el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
+        <Menu></Menu>
       </el-menu>
     </div>
   </div>

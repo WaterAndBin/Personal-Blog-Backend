@@ -10,10 +10,10 @@
         <el-header class="h-[60px] border-b-1 border-zinc-950/10 border-solid">
           <Header></Header>
         </el-header>
-        <el-main class="h-[calc(100vh-60px-60px)] bg-[#F3F4F9]">
+        <el-main class="bg-[#F3F4F9]">
           <Main></Main>
         </el-main>
-        <el-footer class="border-t-1 border-zinc-950/10 border-solid">
+        <el-footer class="border-t-1 border-zinc-950/10 border-solid" style="height: 40px">
           <Footer class="h-full flex-default"></Footer>
         </el-footer>
       </el-container>
