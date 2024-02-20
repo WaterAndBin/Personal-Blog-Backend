@@ -97,9 +97,17 @@ export default defineNuxtConfig({
     }
   },
 
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag === 'pagination'
+    }
+  },
+
   elementPlus: {
+    imports: ['useLocale'],
     icon: 'ElIcon',
     importStyle: 'scss',
-    themes: ['dark']
+    themes: ['dark'],
+    injectionID: { prefix: 100, current: 1 }
   }
 });

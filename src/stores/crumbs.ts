@@ -9,7 +9,7 @@ interface Crumbs {
   other_path?: any;
 }
 
-export const useCrumbsStore = defineStore('crumbs', {
+const useCrumbsStore = defineStore('crumbs', {
   persist: true,
   state: () => {
     return {

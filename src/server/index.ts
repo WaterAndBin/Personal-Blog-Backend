@@ -16,6 +16,12 @@ const request = (obj: HttpRequest): any => {
       onRequestError({ request, options, error }) {
         /* 处理错误请求 */
         console.log('请求失败了');
+
+        ElMessage({
+          message: '网络已经断开!',
+          type: 'warning'
+        });
+
         reject(error);
       },
 
@@ -28,6 +34,12 @@ const request = (obj: HttpRequest): any => {
       onResponseError({ request, response, options }) {
         /* 处理响应错误 */
         console.log('处理响应错误');
+
+        ElMessage({
+          message: '网络响应出错了!',
+          type: 'warning'
+        });
+
         reject(response);
       }
     });
@@ -41,7 +53,7 @@ interface Http {
   post: <t>(url: string, body?: any) => Promise<t>;
 }
 
-export const http: Http = {
+const http: Http = {
   async get(url, params) {
     return await new Promise((resolve, reject) => {
       request({ url, params, methods: 'GET' })

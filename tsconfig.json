@@ -16,5 +16,5 @@
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "types": ["node", "@nuxt/types", "@nuxt/image"]
-  }
+  },
 }
