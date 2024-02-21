@@ -18,6 +18,7 @@ const getData = async (): Promise<void> => {
   if (res.code == 200) {
     data.value = res;
   }
+  loading.value = false;
 };
 
 const setPage = (pages: number, pageSizes: number): void => {
@@ -27,21 +28,23 @@ const setPage = (pages: number, pageSizes: number): void => {
 };
 
 onMounted(() => {
-  getData();
+  nextTick(() => {
+    getData();
+  });
 });
 </script>
 
 <template>
   <LoadingPages :loading="loading">
-    <div class="h-full w-full flex flex-col justify-between">
-      <div>
+    <div class="flex flex-col justify-between flex-1">
+      <div class="w-full h-full">
         <div class="text-2xl font-semibold">角色管理</div>
         <div class="w-full flex flex-col">
           <div class="grid my-3 justify-items-end">
             <el-button type="primary" plain>添加新角色</el-button>
           </div>
           <div class="">
-            <el-table v-loading="loading" :data="data" border style="width: 100%">
+            <el-table :data="data" border style="width: 100%">
               <el-table-column prop="date" label="角色id" />
               <el-table-column prop="name" label="角色名字" />
               <el-table-column prop="name" label="创建者" />

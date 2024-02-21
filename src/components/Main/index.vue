@@ -8,9 +8,9 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
     <div class="h-4">
       <Crumbs></Crumbs>
     </div>
-    <div class="mt-5 box-border break-all rounded-lg bg-white p-5 shadow-lg">
+    <div class="mt-5 overflow-hidden break-all rounded-lg bg-white shadow-lg p-5">
       <el-config-provider :locale="zhCn">
-        <NuxtPage class="min-h-[calc(100vh-220px)] overflow-hidden"></NuxtPage>
+        <NuxtPage class="min-h-[calc(100vh-220px)]"></NuxtPage>
       </el-config-provider>
     </div>
   </div>
