@@ -8,10 +8,10 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-col relative">
+  <div class="relative flex flex-col">
     <slot></slot>
 
-    <div class="w-full h-full bg-gray-900/60 absolute -top-5 -left-5 p-5 z-5" v-if="props.loading">
+    <div v-if="props.loading" class="absolute z-5 h-full w-full bg-gray-900/60 p-5 -left-5 -top-5">
       <div class="relative h-full">
         <svg viewBox="25 25 50 50">
           <circle r="20" cy="50" cx="50"></circle>

@@ -6,9 +6,9 @@ import http from '~/server';
  * @param pageSize 页数量
  * @returns
  */
-export async function getRoleList(currentPage: number, pageSize: number): Promise<any> {
+export async function getRoleList(page: number, pageSize: number): Promise<any> {
   const res = await http.post<{ code: number; data: any }>('/role/getRoleList', {
-    currentPage,
+    page,
     pageSize
   });
   return res;

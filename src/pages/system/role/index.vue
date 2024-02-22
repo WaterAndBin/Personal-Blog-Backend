@@ -15,9 +15,10 @@ const data = ref<any[]>([]);
 const getData = async (): Promise<void> => {
   loading.value = true;
   const res = await getRoleList(page.value, pageSize.value);
-  if (res.code == 200) {
-    data.value = res;
-  }
+  // if (res.code == 200) {
+  //   data.value = res;
+  // }
+  console.log(res);
   loading.value = false;
 };
 
@@ -36,8 +37,8 @@ onMounted(() => {
 
 <template>
   <LoadingPages :loading="loading">
-    <div class="flex flex-col justify-between flex-1">
-      <div class="w-full h-full">
+    <div class="flex flex-1 flex-col justify-between">
+      <div class="h-full w-full">
         <div class="text-2xl font-semibold">角色管理</div>
         <div class="w-full flex flex-col">
           <div class="grid my-3 justify-items-end">
