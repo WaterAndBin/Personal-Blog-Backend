@@ -1,30 +1,29 @@
 <script lang="ts" setup>
 import { getRoleList } from '~/server/api/role';
 
-/* 页码,当前页面 */
-const page = ref<number>(1);
-/* 单页面需要展示多少数据 */
-const pageSize = ref<number>(10);
-/* 数据总数 */
-const pageTotal = ref<number>(0);
-/* 判断是否显示加载 */
-const loading = ref<boolean>(true);
-/* 全部数据 */
-const data = ref<any[]>([]);
+const initState = {
+  page: 1, // 页码,当前页面
+  pageSize: 10, // 单页面需要展示多少数据
+  pageTotal: 0, // 数据总数
+  loading: true, // 判断是否显示加载
+  tableData: [] // 全部数据
+};
+const state = reactive({ ...initState });
 
 const getData = async (): Promise<void> => {
-  loading.value = true;
-  const res = await getRoleList(page.value, pageSize.value);
-  // if (res.code == 200) {
-  //   data.value = res;
-  // }
+  state.loading = true;
+  const res = await getRoleList(state.page, state.pageSize);
+  if (res.code == 200) {
+    // state.tableData = res;
+    ElMessage.success('获取列表数据成功');
+  }
   console.log(res);
-  loading.value = false;
+  state.loading = false;
 };
 
 const setPage = (pages: number, pageSizes: number): void => {
-  page.value = pages;
-  pageSize.value = pageSizes;
+  state.page = pages;
+  state.pageSize = pageSizes;
   getData();
 };
 
@@ -36,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <LoadingPages :loading="loading">
+  <LoadingPages :loading="state.loading">
     <div class="flex flex-1 flex-col justify-between">
       <div class="h-full w-full">
         <div class="text-2xl font-semibold">角色管理</div>
@@ -45,7 +44,7 @@ onMounted(() => {
             <el-button type="primary" plain>添加新角色</el-button>
           </div>
           <div class="">
-            <el-table :data="data" border style="width: 100%">
+            <el-table :data="state.tableData" border style="width: 100%">
               <el-table-column prop="date" label="角色id" />
               <el-table-column prop="name" label="角色名字" />
               <el-table-column prop="name" label="创建者" />
@@ -69,9 +68,9 @@ onMounted(() => {
       </div>
       <div>
         <Pages
-          :page="page"
-          :page-size="pageSize"
-          :page-total="pageTotal"
+          :page="state.page"
+          :page-size="state.pageSize"
+          :page-total="state.pageTotal"
           :set-page="setPage"
         ></Pages>
       </div>

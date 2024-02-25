@@ -44,7 +44,6 @@ const request = (obj: HttpRequest): any => {
       }
     });
   });
-  console.log(res);
   return res;
 };
 

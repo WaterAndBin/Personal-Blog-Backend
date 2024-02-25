@@ -41,7 +41,8 @@ module.exports = {
     'no-lonely-if': "off", // 取消if但是没有else
     'eqeqeq': 'off', // 取消用 ==,
     "@unocss/blocklist": "warn", // or "error"
-    "array-callback-return": "off"
+    "array-callback-return": "off",
+    "@typescript-eslint/no-misused-promises": "off"
   },
   overrides: [
     {
