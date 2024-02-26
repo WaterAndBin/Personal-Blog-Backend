@@ -2,14 +2,23 @@ import http from '~/server';
 import type { userAccount } from '~/types/user';
 
 /**
- * 角色分页
- * @param currentPage 当前页
- * @param pageSize 页数量
+ * 注册
+ * @param data 数据
  * @returns
  */
-export async function userRegister(data: userAccount): Promise<any> {
-  const res = await http.post<{ code: number; data: any }>('/user/register', {
+export async function userRegister(data: userAccount): Promise<{ code: number; message: string }> {
+  return await http.post<{ code: number; message: string }>('/user/register', {
     ...data
   });
-  return res;
+}
+
+/**
+ * 登录
+ * @param data 数据
+ * @returns
+ */
+export async function userLogin(data: userAccount): Promise<{ code: number; message: string }> {
+  return await http.post<{ code: number; message: string }>('/user/login', {
+    ...data
+  });
 }

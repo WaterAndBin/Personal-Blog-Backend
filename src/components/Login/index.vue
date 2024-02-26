@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { userRegister } from '~/server/api/user';
+import { userRegister, userLogin } from '~/server/api/user';
 import type { userAccount } from '~/types/user';
 
 /* dom结构 */
@@ -18,6 +18,15 @@ const submitForm = (formEl: FormInstance | undefined, condition: string): void =
       if (condition === 'register') {
         try {
           const res = await userRegister(state);
+          console.log(res);
+        } catch (error) {
+          // Handle error
+          console.error(error);
+        }
+      }
+      if (condition === 'login') {
+        try {
+          const res = await userLogin(state);
           console.log(res);
         } catch (error) {
           // Handle error
