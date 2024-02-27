@@ -7,7 +7,7 @@ definePageMeta({
 
 <template>
   <div
-    class="box-container h-screen w-screen flex flex-wrap items-center justify-center bg-[#eeeeee] bg-cover bg-center bg-no-repeat overflow-hidden"
+    class="box-container h-screen w-screen flex flex-wrap items-center justify-center overflow-hidden bg-[#eeeeee] bg-cover bg-center bg-no-repeat"
   >
     <div
       class="relative box-border h-94% w-96% flex items-center justify-around rounded-md p-12"

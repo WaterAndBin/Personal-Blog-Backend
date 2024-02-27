@@ -1,11 +1,16 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { userRegister, userLogin } from '~/server/api/user';
+import { userLogin } from '~/server/api/user';
 import type { userAccount } from '~/types/user';
 
 /* dom结构 */
 const formRef = ref<FormInstance>();
+/* 仓库 */
+const userStore = useUserStore();
+/* 路由 */
+const router = useRouter();
 
+/* 数据 */
 const initState: userAccount = {
   account: '', // 账号
   password: '' // 密码
@@ -15,22 +20,18 @@ const state = reactive<userAccount>({ ...initState });
 const submitForm = (formEl: FormInstance | undefined, condition: string): void => {
   formEl?.validate(async (valid): Promise<void> => {
     if (valid) {
-      if (condition === 'register') {
-        try {
-          const res = await userRegister(state);
-          console.log(res);
-        } catch (error) {
-          // Handle error
-          console.error(error);
-        }
-      }
+      // if (condition === 'register') {
+      //   const res = await userRegister(state);
+      //   console.log(res);
+      // }
       if (condition === 'login') {
-        try {
-          const res = await userLogin(state);
-          console.log(res);
-        } catch (error) {
-          // Handle error
-          console.error(error);
+        const res = await userLogin(state);
+        if (res.code == 200) {
+          userStore.setToken(res.token);
+          ElMessage.success('登录成功');
+          router.push('/home');
+        } else {
+          ElMessage.warning(res.message);
         }
       }
     }
@@ -61,7 +62,7 @@ const submitForm = (formEl: FormInstance | undefined, condition: string): void =
     <el-form-item>
       <div class="w-full flex-default">
         <el-button type="primary" @click="submitForm(formRef, 'login')">登录</el-button>
-        <el-button type="primary" @click="submitForm(formRef, 'register')">注册</el-button>
+        <!-- <el-button type="primary" @click="submitForm(formRef, 'register')">注册</el-button> -->
       </div>
     </el-form-item>
   </el-form>

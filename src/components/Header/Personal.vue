@@ -1,5 +1,13 @@
 <!-- 个人中心 -->
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const userStore = useUserStore();
+
+const layout = (): void => {
+  userStore.$reset();
+  ElMessage.success('退出成功');
+  navigateTo('/login');
+};
+</script>
 
 <template>
   <div>
@@ -9,7 +17,7 @@
           <el-button>个人信息</el-button>
         </div>
         <div class="mt-3">
-          <el-button>退出登录</el-button>
+          <el-button @click="layout">退出登录</el-button>
         </div>
       </div>
       <template #reference>
