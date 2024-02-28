@@ -39,3 +39,15 @@ export async function updateRole(data: roleList): Promise<{ code: number; messag
     ...data
   });
 }
+
+/**
+ * 删除角色
+ * @param data 角色的数据
+ * @returns
+ */
+export async function deleteRole(data: roleList): Promise<{ code: number; message: string }> {
+  return await http.post<{ code: number; message: string }>('/role/updateRole', {
+    id: data.id,
+    is_deleted: 1
+  });
+}

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import addRoleDialog from './addRoleDialog.vue';
 import updateRoleDialog from './updateRoleDialog.vue';
-import { getRoleList, updateRole } from '~/server/api/role';
+import { deleteRole, getRoleList, updateRole } from '~/server/api/role';
 import type { roleList } from '~/types/role';
 
 /* dom */
@@ -29,6 +29,7 @@ const getData = (): void => {
     const res = await getRoleList(state.page, state.pageSize);
     if (res.code == 200) {
       state.tableData = res.data.list;
+      state.pageTotal = res.data.total;
       ElMessage.success('获取列表数据成功');
     }
     state.loading = false;
@@ -65,6 +66,16 @@ const updateStatus = async (data: roleList, status: number): Promise<void> => {
     } else {
       ElMessage.success('禁用成功');
     }
+  }
+};
+
+const deleteData = async (data: roleList): Promise<void> => {
+  const res = await deleteRole(data);
+  if (res.code == 200) {
+    ElMessage.success('删除成功');
+    getData();
+  } else {
+    ElMessage.error('删除失败');
   }
 };
 
@@ -130,12 +141,17 @@ onMounted(() => {
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column fixed="right" label="操作" width="120" header-align="center">
+              <el-table-column fixed="right" label="操作" width="150" header-align="center">
                 <template #default="scope">
                   <div class="flex-default">
                     <el-button type="primary" size="small" @click="updateData(scope.row)">
                       修改
                     </el-button>
+                    <el-popconfirm title="确认删除吗？" @confirm="deleteData(scope.row)">
+                      <template #reference>
+                        <el-button>删除</el-button>
+                      </template>
+                    </el-popconfirm>
                   </div>
                 </template>
               </el-table-column>
