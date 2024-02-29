@@ -1,18 +1,22 @@
 <script lang="ts" setup>
-import addMenuDialog from './addMenuDialog.vue';
-import { getMenu } from '~/server/api/menu';
-import { deleteRole, updateRole } from '~/server/api/role';
+import updateUserDialog from './updateUserDialog.vue';
+import { getAllRole } from '~/server/api/role';
+import { getUserList, updateUser, deleteUser } from '~/server/api/user';
 import type { roleList } from '~/types/role';
+import type { userList } from '~/types/user';
 
-/* dom */
-const addMenuDialogRef = ref();
+const updateRoleRef = ref();
 
 /**
  * 初始数据
  */
 const initState = {
+  page: 1 as number, // 页码,当前页面
+  pageSize: 10 as number, // 单页面需要展示多少数据
+  pageTotal: 0 as number, // 数据总数
   loading: true as boolean, // 判断是否显示加载
-  tableData: [] as roleList[] // 全部数据
+  tableData: [] as userList[], // 全部数据
+  roleData: [] as roleList[] // 全部角色
 };
 const state = reactive({ ...initState });
 
@@ -22,8 +26,10 @@ const state = reactive({ ...initState });
 const getData = (): void => {
   state.loading = true;
   setTimeout(async () => {
-    const res = await getMenu();
+    const res = await getUserList(state.page, state.pageSize);
     if (res.code == 200) {
+      state.tableData = res.data.list;
+      state.pageTotal = res.data.total;
       ElMessage.success('获取列表数据成功');
     }
     state.loading = false;
@@ -31,17 +37,28 @@ const getData = (): void => {
 };
 
 /**
+ * 设置页码
+ * @param pages 获取的页码
+ * @param pageSizes 页码的总数
+ */
+const setPage = (pages: number, pageSizes: number): void => {
+  state.page = pages;
+  state.pageSize = pageSizes;
+  getData();
+};
+
+/**
  * 修改数据
  */
-const updateData = (data: roleList): void => {
-  // updateRoleRef.value.setData(data);
+const updateData = (data: userList): void => {
+  updateRoleRef.value.setData(data);
 };
 
 /**
  * 改变状态
  */
-const updateStatus = async (data: roleList, status: number): Promise<void> => {
-  const res = await updateRole({ ...data, status });
+const updateStatus = async (data: userList, status: number): Promise<void> => {
+  const res = await updateUser({ ...data, status });
   if (res.code == 200) {
     getData();
     if (status == 0) {
@@ -52,8 +69,12 @@ const updateStatus = async (data: roleList, status: number): Promise<void> => {
   }
 };
 
-const deleteData = async (data: roleList): Promise<void> => {
-  const res = await deleteRole(data);
+/**
+ * 删除用户
+ * @param data userList
+ */
+const deleteData = async (data: userList): Promise<void> => {
+  const res = await deleteUser(data.id);
   if (res.code == 200) {
     ElMessage.success('删除成功');
     getData();
@@ -62,10 +83,20 @@ const deleteData = async (data: roleList): Promise<void> => {
   }
 };
 
+/**
+ * 获取所有的角色
+ */
+const getRole = async (): Promise<void> => {
+  const res = await getAllRole();
+  if (res.code == 200) {
+    state.roleData = res.data;
+    console.log(state.roleData);
+  }
+};
+
 onMounted(() => {
-  nextTick(() => {
-    getData();
-  });
+  getData();
+  getRole();
 });
 </script>
 
@@ -73,35 +104,25 @@ onMounted(() => {
   <LoadingPages :loading="state.loading">
     <div class="flex flex-1 flex-col justify-between">
       <div class="h-full w-full">
-        <div class="text-2xl font-semibold">菜单管理</div>
+        <div class="text-2xl font-semibold">用户管理</div>
         <div class="w-full flex flex-col">
-          <div class="grid my-3 justify-items-end">
-            <el-button type="primary" plain @click="addMenuDialogRef.showDialog()">
-              添加新菜单
-            </el-button>
-          </div>
+          <div class="grid my-3 justify-items-end"></div>
           <div class="">
             <el-table :data="state.tableData" border style="width: 100%">
-              <el-table-column prop="id" label="菜单id" />
-              <el-table-column prop="role_name" label="菜单名字" />
-              <el-table-column prop="created_id" label="创建者" />
+              <el-table-column prop="id" label="用户id" />
+              <el-table-column prop="user_name" label="用户名字" />
+              <el-table-column prop="user_name" label="用户角色">
+                <template #default="scope">
+                  <span>
+                    {{
+                      state.roleData.find((items) => items.id == scope.row.role_id)?.role_name ??
+                      '-'
+                    }}
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="account" label="用户账号" />
               <el-table-column prop="created_time" label="创建时间" />
-              <el-table-column prop="updated_id" label="修改者">
-                <template #default="scope">
-                  <div v-if="scope.row.updated_id">
-                    {{ scope.row.updated_id }}
-                  </div>
-                  <div v-else>-</div>
-                </template>
-              </el-table-column>
-              <el-table-column prop="updated_time" label="修改时间">
-                <template #default="scope">
-                  <div v-if="scope.row.updated_time">
-                    {{ scope.row.updated_time }}
-                  </div>
-                  <div v-else>-</div>
-                </template>
-              </el-table-column>
               <el-table-column fixed="right" label="禁用" width="80" header-align="center">
                 <template #default="scope">
                   <div class="flex-default">
@@ -142,8 +163,20 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <div>
+        <Pages
+          :page="state.page"
+          :page-size="state.pageSize"
+          :page-total="state.pageTotal"
+          :set-page="setPage"
+        ></Pages>
+      </div>
     </div>
 
-    <addMenuDialog ref="addMenuDialogRef" @get-Data="getData"></addMenuDialog>
+    <updateUserDialog
+      ref="updateRoleRef"
+      :role-data="state.roleData"
+      @get-Data="getData"
+    ></updateUserDialog>
   </LoadingPages>
 </template>

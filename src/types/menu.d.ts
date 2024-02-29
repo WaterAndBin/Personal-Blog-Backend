@@ -4,23 +4,20 @@ export interface MenuList {
 }
 
 export interface MenuTree {
-  created_at?: string;
-  icon?: string | number;
-  menu_id: number;
+  id: number;
   menu_name: string;
-  parent_id?: number;
-  path: string;
-  sort?: number;
-  status?: number;
-  updated_at?: string;
-  children: MemuTree[];
-  active?: number;
-  type?: number;
+  menu_path: string;
+  menu_parent: number;
+  status: number;
+  is_deleted: number;
+  created_id: number;
+  created_time: string;
+  updated_id: number;
+  updated_time: string;
 }
 
 export interface AddMenu {
   menu_name: string;
-  parent_id: number;
-  path: string;
-  sort: number;
+  menu_path: string;
+  menu_parent: number;
 }

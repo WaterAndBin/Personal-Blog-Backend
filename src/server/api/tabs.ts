@@ -41,7 +41,7 @@ export async function updateTabs(data: tabsList): Promise<{ code: number; messag
 }
 
 /**
- * 标签
+ * 删除标签
  * @param data 角色的数据
  * @returns
  */
