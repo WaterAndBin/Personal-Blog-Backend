@@ -1,9 +1,11 @@
+<!-- 修改角色 -->
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { addMenu } from '~/server/api/menu';
-import type { AddMenu } from '~/types/menu';
+import { updateMenu } from '~/server/api/menu';
+import type { MenuTree } from '~/types/menu';
 
 const show = ref(false);
+const useMenu = useMenuData();
 
 const emit = defineEmits<{
   (event: 'getData'): void;
@@ -12,14 +14,19 @@ const emit = defineEmits<{
 /* dom */
 const formRef = ref<FormInstance>();
 
-/* 初始化数据 */
-const initState: AddMenu = {
+const initState: MenuTree = {
+  id: 0,
   menu_name: '',
   menu_path: '',
-  menu_parent: 0
+  menu_parent: 0,
+  status: 0,
+  is_deleted: 0,
+  created_id: 0,
+  created_time: '',
+  updated_id: 0,
+  updated_time: ''
 };
-const state = reactive<AddMenu>({ ...initState });
-const isDisabled = ref<boolean>(false);
+const state = reactive<MenuTree>({ ...initState });
 
 /**
  * 展示弹窗
@@ -28,19 +35,9 @@ const showDialog = (): void => {
   show.value = !show.value;
 };
 
-/**
- * 增加子节点
- * @param data 父节点
- */
-const addSon = (data?: number): void => {
-  if (data) {
-    isDisabled.value = true;
-    state.menu_parent = data;
-  } else {
-    Object.assign(state, initState);
-    isDisabled.value = false;
-  }
-  showDialog();
+const setData = (data: MenuTree): void => {
+  show.value = !show.value;
+  Object.assign(state, data);
 };
 
 /**
@@ -49,32 +46,35 @@ const addSon = (data?: number): void => {
 const submitForm = (formEl: FormInstance | undefined): void => {
   formEl?.validate(async (valid): Promise<void> => {
     if (valid) {
-      const res = await addMenu(state);
+      const res = await updateMenu({
+        ...state
+      });
+      console.log(res);
       if (res.code == 200) {
         emit('getData');
+        useMenu.getMenuData();
+        ElMessage.success('修改菜单成功');
         showDialog();
-        ElMessage.success('添加菜单成功');
       } else {
-        ElMessage.success('添加菜单失败');
+        ElMessage.success('修改菜单失败');
       }
     }
   });
 };
 
-defineExpose({ showDialog, addSon });
+defineExpose({ showDialog, setData });
 </script>
 
-<!-- 添加角色 -->
 <template>
-  <el-dialog v-model="show" title="添加新角色" width="500" :before-close="showDialog" align-center>
+  <el-dialog v-model="show" title="修改角色" width="500" :before-close="showDialog" align-center>
     <el-form ref="formRef" :model="state" label-width="auto" class="demo-ruleForm">
       <el-form-item
         label="菜单名称"
         prop="menu_name"
-        :rules="[{ required: true, message: '请输入菜单名称' }]"
+        :rules="[{ required: true, message: '缺少菜单名称' }]"
       >
         <el-input
-          v-model="state.menu_name"
+          v-model.number="state.menu_name"
           type="text"
           autocomplete="off"
           placeholder="请输入菜单名称"
@@ -83,26 +83,25 @@ defineExpose({ showDialog, addSon });
       <el-form-item
         label="菜单路径"
         prop="menu_path"
-        :rules="[{ required: false, message: '请输入菜单路径' }]"
+        :rules="[{ required: false, message: '缺少菜单路径' }]"
       >
         <el-input
-          v-model="state.menu_path"
+          v-model.number="state.menu_path"
           type="text"
           autocomplete="off"
           placeholder="请输入菜单路径"
         />
       </el-form-item>
       <el-form-item
-        label="菜单父级"
+        label="菜单名称"
         prop="menu_parent"
-        :rules="[{ required: true, message: '请输入菜单父级' }]"
+        :rules="[{ required: true, message: '缺少菜单父级' }]"
       >
         <el-input
           v-model.number="state.menu_parent"
-          type="number"
+          type="text"
           autocomplete="off"
           placeholder="请输入菜单父级"
-          :disabled="isDisabled"
         />
       </el-form-item>
       <el-form-item>

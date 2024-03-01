@@ -1,18 +1,20 @@
 <script lang="ts" setup>
 import addMenuDialog from './addMenuDialog.vue';
-import { getMenu } from '~/server/api/menu';
-import { deleteRole, updateRole } from '~/server/api/role';
-import type { roleList } from '~/types/role';
+import updateMenuDialog from './updateMenuDialog.vue';
+import type { MenuTree } from '~/types/menu';
+import { getAllMenu, updateMenu } from '~/server/api/menu';
 
 /* dom */
 const addMenuDialogRef = ref();
+const updateMenuDialogRef = ref();
+const useMenu = useMenuData();
 
 /**
  * 初始数据
  */
 const initState = {
   loading: true as boolean, // 判断是否显示加载
-  tableData: [] as roleList[] // 全部数据
+  tableData: [] as MenuTree[] // 全部数据
 };
 const state = reactive({ ...initState });
 
@@ -22,26 +24,27 @@ const state = reactive({ ...initState });
 const getData = (): void => {
   state.loading = true;
   setTimeout(async () => {
-    const res = await getMenu();
+    const res = await getAllMenu();
     if (res.code == 200) {
+      state.tableData = res.data;
       ElMessage.success('获取列表数据成功');
     }
     state.loading = false;
-  }, 1000);
+  }, 500);
 };
 
 /**
  * 修改数据
  */
-const updateData = (data: roleList): void => {
-  // updateRoleRef.value.setData(data);
+const updateData = (data: MenuTree): void => {
+  updateMenuDialogRef.value.setData(data);
 };
 
 /**
  * 改变状态
  */
-const updateStatus = async (data: roleList, status: number): Promise<void> => {
-  const res = await updateRole({ ...data, status });
+const updateStatus = async (data: MenuTree, status: number): Promise<void> => {
+  const res = await updateMenu({ ...data, status });
   if (res.code == 200) {
     getData();
     if (status == 0) {
@@ -49,14 +52,16 @@ const updateStatus = async (data: roleList, status: number): Promise<void> => {
     } else {
       ElMessage.success('禁用成功');
     }
+    useMenu.getMenuData();
   }
 };
 
-const deleteData = async (data: roleList): Promise<void> => {
-  const res = await deleteRole(data);
+const deleteData = async (data: MenuTree): Promise<void> => {
+  const res = await updateMenu({ ...data, is_deleted: 1 });
   if (res.code == 200) {
     ElMessage.success('删除成功');
     getData();
+    useMenu.getMenuData();
   } else {
     ElMessage.error('删除失败');
   }
@@ -76,14 +81,21 @@ onMounted(() => {
         <div class="text-2xl font-semibold">菜单管理</div>
         <div class="w-full flex flex-col">
           <div class="grid my-3 justify-items-end">
-            <el-button type="primary" plain @click="addMenuDialogRef.showDialog()">
+            <el-button type="primary" plain @click="addMenuDialogRef.addSon()">
               添加新菜单
             </el-button>
           </div>
           <div class="">
-            <el-table :data="state.tableData" border style="width: 100%">
+            <el-table
+              :data="state.tableData"
+              border
+              style="width: 100%"
+              row-key="id"
+              :default-expand-all="false"
+            >
               <el-table-column prop="id" label="菜单id" />
-              <el-table-column prop="role_name" label="菜单名字" />
+              <el-table-column prop="menu_name" label="菜单名字" />
+              <el-table-column prop="menu_path" label="菜单路径" />
               <el-table-column prop="created_id" label="创建者" />
               <el-table-column prop="created_time" label="创建时间" />
               <el-table-column prop="updated_id" label="修改者">
@@ -124,9 +136,16 @@ onMounted(() => {
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column fixed="right" label="操作" width="150" header-align="center">
+              <el-table-column fixed="right" label="操作" width="240" header-align="center">
                 <template #default="scope">
-                  <div class="flex-default">
+                  <div>
+                    <el-button
+                      type="primary"
+                      size="small"
+                      @click="addMenuDialogRef.addSon(scope.row.id)"
+                    >
+                      增加子菜单
+                    </el-button>
                     <el-button type="primary" size="small" @click="updateData(scope.row)">
                       修改
                     </el-button>
@@ -145,5 +164,6 @@ onMounted(() => {
     </div>
 
     <addMenuDialog ref="addMenuDialogRef" @get-Data="getData"></addMenuDialog>
+    <updateMenuDialog ref="updateMenuDialogRef" @get-Data="getData"></updateMenuDialog>
   </LoadingPages>
 </template>

@@ -1,6 +1,6 @@
 export interface MenuList {
-  list: MenuTree[];
-  size: number;
+  data: MenuTree[];
+  code: number;
 }
 
 export interface MenuTree {
@@ -14,6 +14,7 @@ export interface MenuTree {
   created_time: string;
   updated_id: number;
   updated_time: string;
+  children?: MenuTree[];
 }
 
 export interface AddMenu {
