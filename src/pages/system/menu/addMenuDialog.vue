@@ -4,6 +4,7 @@ import { addMenu } from '~/server/api/menu';
 import type { AddMenu } from '~/types/menu';
 
 const show = ref(false);
+const useMenu = useMenuData();
 
 const emit = defineEmits<{
   (event: 'getData'): void;
@@ -54,6 +55,7 @@ const submitForm = (formEl: FormInstance | undefined): void => {
         emit('getData');
         showDialog();
         ElMessage.success('添加菜单成功');
+        useMenu.getMenuData();
       } else {
         ElMessage.success('添加菜单失败');
       }
