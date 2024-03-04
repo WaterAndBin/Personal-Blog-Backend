@@ -14,6 +14,7 @@ export interface MenuTree {
   created_time: string;
   updated_id: number;
   updated_time: string;
+  icon: string;
   children?: MenuTree[];
 }
 
@@ -21,4 +22,5 @@ export interface AddMenu {
   menu_name: string;
   menu_path: string;
   menu_parent: number;
+  icon: string;
 }

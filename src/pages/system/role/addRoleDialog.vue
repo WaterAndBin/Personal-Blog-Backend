@@ -34,6 +34,7 @@ const submitForm = (formEl: FormInstance | undefined): void => {
       if (res.code == 200) {
         emit('getData');
         ElMessage.success('添加角色成功');
+        showDialog();
       } else {
         ElMessage.success('添加角色失败');
       }

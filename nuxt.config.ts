@@ -23,7 +23,8 @@ export default defineNuxtConfig({
     '@nuxtjs/svg-sprite',
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxt/image',
-    '@element-plus/nuxt'
+    '@element-plus/nuxt',
+    'nuxt-icon'
   ],
 
   /* 配置跨域代理 */

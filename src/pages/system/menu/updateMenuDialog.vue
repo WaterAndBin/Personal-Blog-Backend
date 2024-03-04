@@ -24,7 +24,8 @@ const initState: MenuTree = {
   created_id: 0,
   created_time: '',
   updated_id: 0,
-  updated_time: ''
+  updated_time: '',
+  icon: ''
 };
 const state = reactive<MenuTree>({ ...initState });
 
@@ -103,6 +104,16 @@ defineExpose({ showDialog, setData });
           autocomplete="off"
           placeholder="请输入菜单父级"
         />
+      </el-form-item>
+      <el-form-item
+        label="菜单图标"
+        prop="icon"
+        :rules="[{ required: true, message: '缺少菜单父级' }]"
+      >
+        <el-input v-model.number="state.icon" type="text" autocomplete="off" placeholder="图标" />
+      </el-form-item>
+      <el-form-item label="图标预览" prop="icon">
+        <Icon :name="state.icon ?? ''" color="black" />
       </el-form-item>
       <el-form-item>
         <div class="dialog-default">
