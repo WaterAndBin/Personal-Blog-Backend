@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import setMenuPermissionsDialog from './setMenuPermissionsDialog.vue';
+import setMenuPermissionsDialog from './setMenuPermissionsDIalog.vue';
+import { getAllMenu } from '~/server/api/menu';
 import { getMenuPermissionsList } from '~/server/api/permissions';
+import type { MenuTree } from '~/types/menu';
 import type { roleList } from '~/types/role';
 
 /* dom */
@@ -14,7 +16,8 @@ const initState = {
   pageSize: 10 as number, // 单页面需要展示多少数据
   pageTotal: 0 as number, // 数据总数
   loading: true as boolean, // 判断是否显示加载
-  tableData: [] as roleList[] // 全部数据
+  tableData: [] as roleList[], // 全部数据
+  treeData: [] as MenuTree[]
 };
 const state = reactive({ ...initState });
 
@@ -45,10 +48,20 @@ const setPage = (pages: number, pageSizes: number): void => {
   getData();
 };
 
+/**
+ * 获取树结构
+ */
+const getTreeData = async (): Promise<void> => {
+  const res = await getAllMenu();
+  if (res.code == 200) {
+    state.treeData = res.data;
+    console.log(state.treeData);
+  }
+};
+
 onMounted(() => {
-  nextTick(() => {
-    getData();
-  });
+  getData();
+  getTreeData();
 });
 </script>
 
@@ -81,13 +94,16 @@ onMounted(() => {
                   <div v-else>-</div>
                 </template>
               </el-table-column>
-              <el-table-column fixed="right" label="操作" width="150" header-align="center">
-                <template>
-                  <div class="flex-default">
+
+              <el-table-column fixed="right" label="操作" width="110" header-align="center">
+                <template #default="scope">
+                  <div class="">
                     <el-button
                       type="primary"
                       size="small"
-                      @click="setMenuPermissionsDialogRef.show()"
+                      @click="
+                        setMenuPermissionsDialogRef.setData(scope.row.role_id, scope.row.lists)
+                      "
                     >
                       修改权限
                     </el-button>
@@ -108,6 +124,10 @@ onMounted(() => {
       </div>
     </div>
 
-    <setMenuPermissionsDialog ref="setMenuPermissionsDialogRef"></setMenuPermissionsDialog>
+    <setMenuPermissionsDialog
+      ref="setMenuPermissionsDialogRef"
+      :tree-data="state.treeData"
+      @get-data="getData"
+    ></setMenuPermissionsDialog>
   </LoadingPages>
 </template>
