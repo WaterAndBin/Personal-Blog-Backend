@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { deleteRole, getRoleList, updateRole } from '~/server/api/role';
+import setMenuPermissionsDialog from './setMenuPermissionsDialog.vue';
+import { getMenuPermissionsList } from '~/server/api/permissions';
 import type { roleList } from '~/types/role';
 
 /* dom */
-const addRoleDialogRef = ref();
-const updateRoleRef = ref();
+const setMenuPermissionsDialogRef = ref();
 
 /**
  * 初始数据
@@ -24,7 +24,7 @@ const state = reactive({ ...initState });
 const getData = (): void => {
   state.loading = true;
   setTimeout(async () => {
-    const res = await getRoleList(state.page, state.pageSize);
+    const res = await getMenuPermissionsList(state.page, state.pageSize);
     if (res.code == 200) {
       state.tableData = res.data.list;
       state.pageTotal = res.data.total;
@@ -45,38 +45,6 @@ const setPage = (pages: number, pageSizes: number): void => {
   getData();
 };
 
-/**
- * 修改数据
- */
-const updateData = (data: roleList): void => {
-  updateRoleRef.value.setData(data);
-};
-
-/**
- * 改变状态
- */
-const updateStatus = async (data: roleList, status: number): Promise<void> => {
-  const res = await updateRole({ ...data, status });
-  if (res.code == 200) {
-    getData();
-    if (status == 0) {
-      ElMessage.success('开启成功');
-    } else {
-      ElMessage.success('禁用成功');
-    }
-  }
-};
-
-const deleteData = async (data: roleList): Promise<void> => {
-  const res = await deleteRole(data);
-  if (res.code == 200) {
-    ElMessage.success('删除成功');
-    getData();
-  } else {
-    ElMessage.error('删除失败');
-  }
-};
-
 onMounted(() => {
   nextTick(() => {
     getData();
@@ -88,16 +56,12 @@ onMounted(() => {
   <LoadingPages :loading="state.loading">
     <div class="flex flex-1 flex-col justify-between">
       <div class="h-full w-full">
-        <div class="text-2xl font-semibold">角色管理</div>
+        <div class="text-2xl font-semibold">菜单权限</div>
         <div class="w-full flex flex-col">
-          <div class="grid my-3 justify-items-end">
-            <el-button type="primary" plain @click="addRoleDialogRef.showDialog()">
-              添加新角色
-            </el-button>
-          </div>
+          <div class="grid my-3 justify-items-end"></div>
           <div class="">
             <el-table :data="state.tableData" border style="width: 100%">
-              <el-table-column prop="id" label="角色id" />
+              <el-table-column prop="role_id" label="角色id" />
               <el-table-column prop="role_name" label="角色名字" />
               <el-table-column prop="created_id" label="创建者" />
               <el-table-column prop="created_time" label="创建时间" />
@@ -117,39 +81,16 @@ onMounted(() => {
                   <div v-else>-</div>
                 </template>
               </el-table-column>
-              <el-table-column fixed="right" label="禁用" width="80" header-align="center">
-                <template #default="scope">
-                  <div class="flex-default">
-                    <el-button
-                      v-if="scope.row.status == 0"
-                      type="danger"
-                      size="small"
-                      @click="updateStatus(scope.row, 1)"
-                    >
-                      禁用
-                    </el-button>
-                    <el-button
-                      v-if="scope.row.status == 1"
-                      type="success"
-                      size="small"
-                      @click="updateStatus(scope.row, 0)"
-                    >
-                      开启
-                    </el-button>
-                  </div>
-                </template>
-              </el-table-column>
               <el-table-column fixed="right" label="操作" width="150" header-align="center">
-                <template #default="scope">
+                <template>
                   <div class="flex-default">
-                    <el-button type="primary" size="small" @click="updateData(scope.row)">
-                      修改
+                    <el-button
+                      type="primary"
+                      size="small"
+                      @click="setMenuPermissionsDialogRef.show()"
+                    >
+                      修改权限
                     </el-button>
-                    <el-popconfirm title="确认删除吗？" @confirm="deleteData(scope.row)">
-                      <template #reference>
-                        <el-button>删除</el-button>
-                      </template>
-                    </el-popconfirm>
                   </div>
                 </template>
               </el-table-column>
@@ -166,5 +107,7 @@ onMounted(() => {
         ></Pages>
       </div>
     </div>
+
+    <setMenuPermissionsDialog ref="setMenuPermissionsDialogRef"></setMenuPermissionsDialog>
   </LoadingPages>
 </template>
