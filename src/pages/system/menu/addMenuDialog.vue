@@ -108,11 +108,7 @@ defineExpose({ showDialog, addSon });
           :disabled="isDisabled"
         />
       </el-form-item>
-      <el-form-item
-        label="菜单图标"
-        prop="icon"
-        :rules="[{ required: true, message: '缺少菜单父级' }]"
-      >
+      <el-form-item label="菜单图标" prop="icon">
         <el-input v-model.number="state.icon" type="text" autocomplete="off" placeholder="图标" />
       </el-form-item>
       <el-form-item label="图标预览" prop="icon">

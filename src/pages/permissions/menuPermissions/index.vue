@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import setMenuPermissionsDialog from './setMenuPermissionsDIalog.vue';
+import setMenuPermissionsDialog from './setMenuPermissionsDialog.vue';
 import { getAllMenu } from '~/server/api/menu';
 import { getMenuPermissionsList } from '~/server/api/permissions';
 import type { MenuTree } from '~/types/menu';
@@ -131,3 +131,4 @@ onMounted(() => {
     ></setMenuPermissionsDialog>
   </LoadingPages>
 </template>
+./setMenuPermissionsDialog.vue

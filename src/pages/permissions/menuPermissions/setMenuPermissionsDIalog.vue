@@ -13,10 +13,11 @@ const emits = defineEmits<{
 }>();
 /* dom */
 const treeRef = ref();
+/* 数据 */
 const formData = reactive({
-  role_id: '',
-  lists: []
+  role_id: ''
 });
+const listsData = ref<number[]>([]);
 
 const defaultProps = {
   children: 'children',
@@ -36,7 +37,8 @@ const close = (): void => {
  */
 const setData = (roleId: string, data: string): void => {
   formData.role_id = roleId;
-  formData.lists = JSON.parse(data);
+  listsData.value = JSON.parse(data);
+  treeRef.value?.setCheckedKeys(listsData.value, false);
   show();
 };
 
@@ -73,7 +75,7 @@ defineExpose({
             :check-strictly="true"
             node-key="id"
             :props="defaultProps"
-            :default-checked-keys="formData.lists"
+            :default-checked-keys="listsData"
             :default-expand-all="true"
           />
         </div>

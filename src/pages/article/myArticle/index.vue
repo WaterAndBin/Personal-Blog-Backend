@@ -1,12 +1,8 @@
 <script lang="ts" setup>
-import addMenuDialog from './addMenuDialog.vue';
-import updateMenuDialog from './updateMenuDialog.vue';
 import type { MenuTree } from '~/types/menu';
 import { getAllMenu, updateMenu } from '~/server/api/menu';
 
 /* dom */
-const addMenuDialogRef = ref();
-const updateMenuDialogRef = ref();
 const useMenu = useMenuData();
 
 /**
@@ -36,9 +32,7 @@ const getData = (): void => {
 /**
  * 修改数据
  */
-const updateData = (data: MenuTree): void => {
-  updateMenuDialogRef.value.setData(data);
-};
+const updateData = (data: MenuTree): void => {};
 
 /**
  * 改变状态
@@ -81,9 +75,7 @@ onMounted(() => {
         <div class="text-2xl font-semibold">菜单管理</div>
         <div class="w-full flex flex-col">
           <div class="grid my-3 justify-items-end">
-            <el-button type="primary" plain @click="addMenuDialogRef.addSon()">
-              添加新菜单
-            </el-button>
+            <el-button type="primary" plain>添加新菜单</el-button>
           </div>
           <div class="">
             <el-table
@@ -148,14 +140,8 @@ onMounted(() => {
               </el-table-column>
               <el-table-column fixed="right" label="操作" width="240" header-align="center">
                 <template #default="scope">
-                  <div class="flex-default">
-                    <el-button
-                      type="primary"
-                      size="small"
-                      @click="addMenuDialogRef.addSon(scope.row.id)"
-                    >
-                      增加子菜单
-                    </el-button>
+                  <div>
+                    <el-button type="primary" size="small">增加子菜单</el-button>
                     <el-button type="primary" size="small" @click="updateData(scope.row)">
                       修改
                     </el-button>
@@ -172,8 +158,5 @@ onMounted(() => {
         </div>
       </div>
     </div>
-
-    <addMenuDialog ref="addMenuDialogRef" @get-Data="getData"></addMenuDialog>
-    <updateMenuDialog ref="updateMenuDialogRef" @get-Data="getData"></updateMenuDialog>
   </LoadingPages>
 </template>

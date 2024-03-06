@@ -11,6 +11,8 @@ export function useMenuData(): {
     const res = await getMenu();
     if (res.code == 200) {
       menuData.value = res.data;
+    } else {
+      menuData.value = [];
     }
   };
 
