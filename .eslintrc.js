@@ -42,7 +42,8 @@ module.exports = {
     'eqeqeq': 'off', // 取消用 ==,
     "@unocss/blocklist": "warn", // or "error"
     "array-callback-return": "off",
-    "@typescript-eslint/no-misused-promises": "off"
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/indent": "off"
   },
   overrides: [
     {
