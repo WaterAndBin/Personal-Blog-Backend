@@ -2,7 +2,7 @@
 import addRoleDialog from './addRoleDialog.vue';
 import updateRoleDialog from './updateRoleDialog.vue';
 import { deleteRole, getRoleList, updateRole } from '~/server/api/role';
-import type { roleList } from '~/types/role';
+import type { RoleList } from '~/types/role';
 
 /* dom */
 const addRoleDialogRef = ref();
@@ -16,7 +16,7 @@ const initState = {
   pageSize: 10 as number, // 单页面需要展示多少数据
   pageTotal: 0 as number, // 数据总数
   loading: true as boolean, // 判断是否显示加载
-  tableData: [] as roleList[] // 全部数据
+  tableData: [] as RoleList[] // 全部数据
 };
 const state = reactive({ ...initState });
 
@@ -50,14 +50,14 @@ const setPage = (pages: number, pageSizes: number): void => {
 /**
  * 修改数据
  */
-const updateData = (data: roleList): void => {
+const updateData = (data: RoleList): void => {
   updateRoleRef.value.setData(data);
 };
 
 /**
  * 改变状态
  */
-const updateStatus = async (data: roleList, status: number): Promise<void> => {
+const updateStatus = async (data: RoleList, status: number): Promise<void> => {
   const res = await updateRole({ ...data, status });
   if (res.code == 200) {
     getData();
@@ -69,7 +69,7 @@ const updateStatus = async (data: roleList, status: number): Promise<void> => {
   }
 };
 
-const deleteData = async (data: roleList): Promise<void> => {
+const deleteData = async (data: RoleList): Promise<void> => {
   const res = await deleteRole(data);
   if (res.code == 200) {
     ElMessage.success('删除成功');

@@ -1,6 +1,6 @@
 /* 权限 */
 import http from '~/server';
-import type { menuPermissionsListPagination } from '~/types/permissions';
+import type { MenuPermissionsListPagination } from '~/types/permissions';
 
 /**
  * 菜单权限列表
@@ -12,7 +12,7 @@ export async function getMenuPermissionsList(
   page: number,
   pageSize: number
 ): Promise<{ code: number; data: any }> {
-  const res = await http.post<{ code: number; data: menuPermissionsListPagination }>(
+  const res = await http.post<{ code: number; data: MenuPermissionsListPagination }>(
     '/permissions/getMenuPermissionsList',
     {
       page,
@@ -32,7 +32,7 @@ export async function setMenuPermissions(
   roleId: string,
   lists: number[]
 ): Promise<{ code: number; data: any }> {
-  const res = await http.post<{ code: number; data: menuPermissionsListPagination }>(
+  const res = await http.post<{ code: number; data: MenuPermissionsListPagination }>(
     '/permissions/setMenuPermissions',
     {
       role_id: roleId,

@@ -2,13 +2,13 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
 import { updateUser } from '~/server/api/user';
-import type { roleList } from '~/types/role';
-import type { userList } from '~/types/user';
+import type { RoleList } from '~/types/role';
+import type { UserList } from '~/types/user';
 
 const show = ref(false);
 
 const props = defineProps<{
-  roleData: roleList[];
+  roleData: RoleList[];
 }>();
 
 const emit = defineEmits<{
@@ -18,7 +18,7 @@ const emit = defineEmits<{
 /* dom */
 const formRef = ref<FormInstance>();
 
-const state = reactive<userList>({
+const state = reactive<UserList>({
   id: 0,
   role_id: 0,
   user_name: '',
@@ -34,7 +34,7 @@ const showDialog = (): void => {
   show.value = !show.value;
 };
 
-const setData = (data: userList): void => {
+const setData = (data: UserList): void => {
   show.value = !show.value;
   Object.assign(state, data);
 };

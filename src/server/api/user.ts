@@ -1,12 +1,12 @@
 import http from '~/server';
-import type { userAccount, userList, userListPagination } from '~/types/user';
+import type { UserAccount, UserList, UserListPagination } from '~/types/user';
 
 /**
  * 注册
  * @param data 数据
  * @returns
  */
-export async function userRegister(data: userAccount): Promise<{ code: number; message: string }> {
+export async function userRegister(data: UserAccount): Promise<{ code: number; message: string }> {
   return await http.post<{ code: number; message: string }>('/user/register', {
     ...data
   });
@@ -18,7 +18,7 @@ export async function userRegister(data: userAccount): Promise<{ code: number; m
  * @returns
  */
 export async function userLogin(
-  data: userAccount
+  data: UserAccount
 ): Promise<{ code: number; token: string; message: string }> {
   return await http.post<{ code: number; token: string; message: string }>('/user/login', {
     ...data
@@ -34,8 +34,8 @@ export async function userLogin(
 export async function getUserList(
   page: number,
   pageSize: number
-): Promise<{ code: number; data: userListPagination }> {
-  const res = await http.post<{ code: number; data: userListPagination }>('/user/getUserList', {
+): Promise<{ code: number; data: UserListPagination }> {
+  const res = await http.post<{ code: number; data: UserListPagination }>('/user/getUserList', {
     page,
     pageSize
   });
@@ -47,7 +47,7 @@ export async function getUserList(
  * @param data 角色的数据
  * @returns
  */
-export async function updateUser(data: userList): Promise<{ code: number; message: string }> {
+export async function updateUser(data: UserList): Promise<{ code: number; message: string }> {
   return await http.post<{ code: number; message: string }>('/user/updateUser', {
     ...data
   });

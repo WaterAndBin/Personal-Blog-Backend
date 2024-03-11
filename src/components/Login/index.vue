@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
 import { userLogin } from '~/server/api/user';
-import type { userAccount } from '~/types/user';
+import type { UserAccount } from '~/types/user';
 
 /* dom结构 */
 const formRef = ref<FormInstance>();
@@ -11,11 +11,11 @@ const userStore = useUserStore();
 const router = useRouter();
 
 /* 数据 */
-const initState: userAccount = {
+const initState: UserAccount = {
   account: '', // 账号
   password: '' // 密码
 };
-const state = reactive<userAccount>({ ...initState });
+const state = reactive<UserAccount>({ ...initState });
 
 const submitForm = (formEl: FormInstance | undefined, condition: string): void => {
   formEl?.validate(async (valid): Promise<void> => {

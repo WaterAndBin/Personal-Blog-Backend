@@ -3,7 +3,7 @@
 /**
  * 菜单权限列表
  */
-export interface menuPermissionsListPagination {
+export interface MenuPermissionsListPagination {
   currentPage: number; // 当前页
   list: menuPermissionsList[];
   pageSize: 10; // 页的总数
@@ -13,7 +13,7 @@ export interface menuPermissionsListPagination {
 /**
  * 菜单权限列表
  */
-export interface menuPermissionsList {
+export interface MenuPermissionsList {
   created_id: number;
   created_time: string;
   lists: number[];

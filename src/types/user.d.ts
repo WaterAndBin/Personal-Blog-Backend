@@ -1,7 +1,7 @@
 /**
  * 登陆账号，密码
  */
-export interface userAccount {
+export interface UserAccount {
   account: string; // 账号
   password: string; // 密码
 }
@@ -9,7 +9,7 @@ export interface userAccount {
 /**
  * 获取用户列表
  */
-export interface userListPagination {
+export interface UserListPagination {
   currentPage: number; // 当前页
   list: tabsList[];
   pageSize: 10; // 页的总数
@@ -19,7 +19,7 @@ export interface userListPagination {
 /**
  * 角色列表
  */
-export interface userList {
+export interface UserList {
   id: number; // 主键 id
   role_id: number; // 角色id
   user_name: string; // 标签名字

@@ -3,7 +3,7 @@
 /**
  * 获取标签列表
  */
-export interface tabsListPagination {
+export interface TabsListPagination {
   currentPage: number; // 当前页
   list: tabsList[];
   pageSize: 10; // 页的总数
@@ -13,7 +13,7 @@ export interface tabsListPagination {
 /**
  * 角色列表
  */
-export interface tabsList {
+export interface TabsList {
   id: number; // 主键 id
   tab_name: string; // 标签名字
   is_deleted: number; // 是否禁用

@@ -1,5 +1,5 @@
 import http from '~/server';
-import type { tabsList, tabsListPagination } from '~/types/tabs';
+import type { TabsList, TabsListPagination } from '~/types/tabs';
 
 /**
  * 标签分页
@@ -10,8 +10,8 @@ import type { tabsList, tabsListPagination } from '~/types/tabs';
 export async function getTabsList(
   page: number,
   pageSize: number
-): Promise<{ code: number; data: tabsListPagination }> {
-  const res = await http.post<{ code: number; data: tabsListPagination }>('/tabs/getTabsList', {
+): Promise<{ code: number; data: TabsListPagination }> {
+  const res = await http.post<{ code: number; data: TabsListPagination }>('/tabs/getTabsList', {
     page,
     pageSize
   });
@@ -34,7 +34,7 @@ export async function addTabs(tabName: string): Promise<{ code: number; message:
  * @param data 角色的数据
  * @returns
  */
-export async function updateTabs(data: tabsList): Promise<{ code: number; message: string }> {
+export async function updateTabs(data: TabsList): Promise<{ code: number; message: string }> {
   return await http.post<{ code: number; message: string }>('/tabs/updateTabs', {
     ...data
   });
@@ -45,7 +45,7 @@ export async function updateTabs(data: tabsList): Promise<{ code: number; messag
  * @param data 角色的数据
  * @returns
  */
-export async function deleteTabs(data: tabsList): Promise<{ code: number; message: string }> {
+export async function deleteTabs(data: TabsList): Promise<{ code: number; message: string }> {
   return await http.post<{ code: number; message: string }>('/tabs/updateTabs', {
     id: data.id,
     is_deleted: 1

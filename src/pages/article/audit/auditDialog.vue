@@ -1,8 +1,8 @@
-<!-- 审核弹窗 -->
+<!-- 修改角色 -->
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { addRole } from '~/server/api/role';
-import type { ArticleList } from '~/types/article';
+import { setAuditArticle } from '~/server/api/article';
+import type { AuditArticleStatus } from '~/types/article';
 
 const show = ref(false);
 
@@ -13,16 +13,22 @@ const emit = defineEmits<{
 /* dom */
 const formRef = ref<FormInstance>();
 
-/* 初始化数据 */
-const initState = {
-  role_name: '' as string
-};
-const state = reactive({ ...initState });
+const state = reactive<AuditArticleStatus>({
+  id: '',
+  status: 2,
+  reject_type: -1,
+  reject_reason: ''
+});
 
 /**
  * 展示弹窗
  */
 const showDialog = (): void => {
+  show.value = !show.value;
+};
+
+const setData = (data: string): void => {
+  state.id = data;
   show.value = !show.value;
 };
 
@@ -32,38 +38,47 @@ const showDialog = (): void => {
 const submitForm = (formEl: FormInstance | undefined): void => {
   formEl?.validate(async (valid): Promise<void> => {
     if (valid) {
-      const res = await addRole(state.role_name);
+      const res = await setAuditArticle({
+        ...state
+      });
       if (res.code == 200) {
         emit('getData');
-        ElMessage.success('添加角色成功');
+        ElMessage.success('审核成功');
         showDialog();
       } else {
-        ElMessage.success('添加角色失败');
+        ElMessage.success('审核失败');
       }
     }
   });
 };
 
-const getDataShow = (data: ArticleList): void => {
-  showDialog();
-};
-
-defineExpose({ showDialog, getDataShow });
+defineExpose({ showDialog, setData });
 </script>
 
 <template>
-  <el-dialog v-model="show" title="审核结果" width="500" :before-close="showDialog" align-center>
+  <el-dialog v-model="show" title="审核结果" width="600" :before-close="showDialog">
     <el-form ref="formRef" :model="state" label-width="auto" class="demo-ruleForm">
-      <el-form-item
-        label="角色名字"
-        prop="role_name"
-        :rules="[{ required: true, message: '缺少角色名字' }]"
-      >
+      <el-form-item label="是否通过" prop="status">
+        <el-radio-group v-model="state.status">
+          <el-radio :label="2">通过</el-radio>
+          <el-radio :label="3">不通过</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="state.status == 3" label="不通过类型" prop="reject_type">
+        <el-radio-group v-model="state.reject_type">
+          <el-radio :label="1">封面问题</el-radio>
+          <el-radio :label="2">标题问题</el-radio>
+          <el-radio :label="3">文章内容问题</el-radio>
+          <el-radio :label="4">其他问题</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="state.status == 3" label="不通过理由" prop="reject_reason">
         <el-input
-          v-model.number="state.role_name"
-          type="text"
-          autocomplete="off"
-          placeholder="请输入角色名字"
+          v-model="state.reject_reason"
+          maxlength="200"
+          placeholder="请输入不通过的理由"
+          show-word-limit
+          type="textarea"
         />
       </el-form-item>
       <el-form-item>
@@ -73,11 +88,5 @@ defineExpose({ showDialog, getDataShow });
         </div>
       </el-form-item>
     </el-form>
-    <!-- <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="show = false">取消</el-button>
-        <el-button type="primary" @click="show = false">确认</el-button>
-      </div>
-    </template> -->
   </el-dialog>
 </template>

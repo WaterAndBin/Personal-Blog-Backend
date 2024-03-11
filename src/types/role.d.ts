@@ -3,7 +3,7 @@
 /**
  * 获取角色列表
  */
-export interface roleListPagination {
+export interface RoleListPagination {
   currentPage: number; // 当前页
   list: roleList[];
   pageSize: 10; // 页的总数
@@ -13,7 +13,7 @@ export interface roleListPagination {
 /**
  * 角色列表
  */
-export interface roleList {
+export interface RoleList {
   id: number; // 主键 id
   role_name: string; // 角色的名字
   is_deleted: number; // 是否禁用

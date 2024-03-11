@@ -1,5 +1,5 @@
 import http from '~/server';
-import type { roleList, roleListPagination } from '~/types/role';
+import type { RoleList, RoleListPagination } from '~/types/role';
 
 /**
  * 角色分页
@@ -10,8 +10,8 @@ import type { roleList, roleListPagination } from '~/types/role';
 export async function getRoleList(
   page: number,
   pageSize: number
-): Promise<{ code: number; data: roleListPagination }> {
-  const res = await http.post<{ code: number; data: roleListPagination }>('/role/getRoleList', {
+): Promise<{ code: number; data: RoleListPagination }> {
+  const res = await http.post<{ code: number; data: RoleListPagination }>('/role/getRoleList', {
     page,
     pageSize
   });
@@ -34,7 +34,7 @@ export async function addRole(roleName: string): Promise<{ code: number; message
  * @param data 角色的数据
  * @returns
  */
-export async function updateRole(data: roleList): Promise<{ code: number; message: string }> {
+export async function updateRole(data: RoleList): Promise<{ code: number; message: string }> {
   return await http.post<{ code: number; message: string }>('/role/updateRole', {
     ...data
   });
@@ -45,7 +45,7 @@ export async function updateRole(data: roleList): Promise<{ code: number; messag
  * @param data 角色的数据
  * @returns
  */
-export async function deleteRole(data: roleList): Promise<{ code: number; message: string }> {
+export async function deleteRole(data: RoleList): Promise<{ code: number; message: string }> {
   return await http.post<{ code: number; message: string }>('/role/updateRole', {
     id: data.id,
     is_deleted: 1
@@ -57,6 +57,6 @@ export async function deleteRole(data: roleList): Promise<{ code: number; messag
  * @param data 角色的数据
  * @returns
  */
-export async function getAllRole(): Promise<{ code: number; data: roleList[]; message: string }> {
-  return await http.get<{ code: number; data: roleList[]; message: string }>('/role/getAllRole');
+export async function getAllRole(): Promise<{ code: number; data: RoleList[]; message: string }> {
+  return await http.get<{ code: number; data: RoleList[]; message: string }>('/role/getAllRole');
 }

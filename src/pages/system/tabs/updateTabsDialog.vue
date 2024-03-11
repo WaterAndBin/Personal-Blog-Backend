@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
 import { updateTabs } from '~/server/api/tabs';
-import type { tabsList } from '~/types/tabs';
+import type { TabsList } from '~/types/tabs';
 
 const show = ref(false);
 
@@ -13,7 +13,7 @@ const emit = defineEmits<{
 /* dom */
 const formRef = ref<FormInstance>();
 
-const state = reactive<tabsList>({
+const state = reactive<TabsList>({
   id: 0,
   tab_name: '',
   is_deleted: 0,
@@ -31,7 +31,7 @@ const showDialog = (): void => {
   show.value = !show.value;
 };
 
-const setData = (data: tabsList): void => {
+const setData = (data: TabsList): void => {
   show.value = !show.value;
   Object.assign(state, data);
 };

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import addTabsDialog from './addTabsDialog.vue';
 import updateTabsDialog from './updateTabsDialog.vue';
-import type { tabsList } from '~/types/tabs';
+import type { TabsList } from '~/types/tabs';
 import { getTabsList, deleteTabs, updateTabs } from '~/server/api/tabs';
 
 /* dom */
@@ -16,7 +16,7 @@ const initState = {
   pageSize: 10 as number, // 单页面需要展示多少数据
   pageTotal: 0 as number, // 数据总数
   loading: true as boolean, // 判断是否显示加载
-  tableData: [] as tabsList[] // 全部数据
+  tableData: [] as TabsList[] // 全部数据
 };
 const state = reactive({ ...initState });
 
@@ -50,14 +50,14 @@ const setPage = (pages: number, pageSizes: number): void => {
 /**
  * 修改数据
  */
-const updateData = (data: tabsList): void => {
+const updateData = (data: TabsList): void => {
   updateRoleRef.value.setData(data);
 };
 
 /**
  * 改变状态
  */
-const updateStatus = async (data: tabsList, status: number): Promise<void> => {
+const updateStatus = async (data: TabsList, status: number): Promise<void> => {
   const res = await updateTabs({ ...data, status });
   if (res.code == 200) {
     getData();
@@ -69,7 +69,7 @@ const updateStatus = async (data: tabsList, status: number): Promise<void> => {
   }
 };
 
-const deleteData = async (data: tabsList): Promise<void> => {
+const deleteData = async (data: TabsList): Promise<void> => {
   const res = await deleteTabs(data);
   if (res.code == 200) {
     ElMessage.success('删除成功');

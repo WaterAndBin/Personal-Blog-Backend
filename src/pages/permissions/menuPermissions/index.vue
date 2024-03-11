@@ -3,7 +3,7 @@ import setMenuPermissionsDialog from './setMenuPermissionsDialog.vue';
 import { getAllMenu } from '~/server/api/menu';
 import { getMenuPermissionsList } from '~/server/api/permissions';
 import type { MenuTree } from '~/types/menu';
-import type { roleList } from '~/types/role';
+import type { RoleList } from '~/types/role';
 
 /* dom */
 const setMenuPermissionsDialogRef = ref();
@@ -16,7 +16,7 @@ const initState = {
   pageSize: 10 as number, // 单页面需要展示多少数据
   pageTotal: 0 as number, // 数据总数
   loading: true as boolean, // 判断是否显示加载
-  tableData: [] as roleList[], // 全部数据
+  tableData: [] as RoleList[], // 全部数据
   treeData: [] as MenuTree[]
 };
 const state = reactive({ ...initState });

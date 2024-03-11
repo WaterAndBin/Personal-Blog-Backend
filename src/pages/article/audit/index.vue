@@ -4,6 +4,7 @@ import { getAuditArticleList } from '~/server/api/article';
 import type { ArticleList } from '~/types/article';
 
 /* dom */
+const articleDetailDialogRef = ref();
 const auditDialogRef = ref();
 
 /**
@@ -78,6 +79,7 @@ onMounted(() => {
                   <div v-else>-</div>
                 </template>
               </el-table-column>
+              <el-table-column prop="article_title" label="文章标题" />
               <el-table-column prop="created_time" label="发布时间" />
               <el-table-column fixed="right" label="操作" width="150" header-align="center">
                 <template #default="scope">
@@ -85,14 +87,14 @@ onMounted(() => {
                     <el-button
                       type="primary"
                       size="small"
-                      @click="auditDialogRef.getDataShow(scope.row)"
+                      @click="articleDetailDialogRef.getDataShow(scope.row)"
                     >
-                      文章详情
+                      文章内容
                     </el-button>
                     <el-button
                       type="primary"
                       size="small"
-                      @click="auditDialogRef.getDataShow(scope.row)"
+                      @click="auditDialogRef.setData(scope.row.id)"
                     >
                       审核
                     </el-button>
@@ -113,7 +115,9 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- 审核弹窗 -->
-    <auditDialog ref="auditDialogRef"></auditDialog>
+    <!-- 文章详情 -->
+    <ArticleDetailDialog ref="articleDetailDialogRef"></ArticleDetailDialog>
+    <!-- 审核 -->
+    <auditDialog ref="auditDialogRef" @get-data="getData"></auditDialog>
   </LoadingPages>
 </template>

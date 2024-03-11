@@ -2,8 +2,8 @@
 import updateUserDialog from './updateUserDialog.vue';
 import { getAllRole } from '~/server/api/role';
 import { getUserList, updateUser, deleteUser } from '~/server/api/user';
-import type { roleList } from '~/types/role';
-import type { userList } from '~/types/user';
+import type { RoleList } from '~/types/role';
+import type { UserList } from '~/types/user';
 
 const updateRoleRef = ref();
 
@@ -15,8 +15,8 @@ const initState = {
   pageSize: 10 as number, // 单页面需要展示多少数据
   pageTotal: 0 as number, // 数据总数
   loading: true as boolean, // 判断是否显示加载
-  tableData: [] as userList[], // 全部数据
-  roleData: [] as roleList[] // 全部角色
+  tableData: [] as UserList[], // 全部数据
+  roleData: [] as RoleList[] // 全部角色
 };
 const state = reactive({ ...initState });
 
@@ -50,14 +50,14 @@ const setPage = (pages: number, pageSizes: number): void => {
 /**
  * 修改数据
  */
-const updateData = (data: userList): void => {
+const updateData = (data: UserList): void => {
   updateRoleRef.value.setData(data);
 };
 
 /**
  * 改变状态
  */
-const updateStatus = async (data: userList, status: number): Promise<void> => {
+const updateStatus = async (data: UserList, status: number): Promise<void> => {
   const res = await updateUser({ ...data, status });
   if (res.code == 200) {
     getData();
@@ -73,7 +73,7 @@ const updateStatus = async (data: userList, status: number): Promise<void> => {
  * 删除用户
  * @param data userList
  */
-const deleteData = async (data: userList): Promise<void> => {
+const deleteData = async (data: UserList): Promise<void> => {
   const res = await deleteUser(data.id);
   if (res.code == 200) {
     ElMessage.success('删除成功');

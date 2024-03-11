@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
 import { updateRole } from '~/server/api/role';
-import type { roleList } from '~/types/role';
+import type { RoleList } from '~/types/role';
 
 const show = ref(false);
 
@@ -13,7 +13,7 @@ const emit = defineEmits<{
 /* dom */
 const formRef = ref<FormInstance>();
 
-const state = reactive<roleList>({
+const state = reactive<RoleList>({
   id: 0,
   role_name: '',
   is_deleted: 0,
@@ -31,7 +31,7 @@ const showDialog = (): void => {
   show.value = !show.value;
 };
 
-const setData = (data: roleList): void => {
+const setData = (data: RoleList): void => {
   show.value = !show.value;
   Object.assign(state, data);
 };
