@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import setMenuPermissionsDialog from './setMenuPermissionsDialog.vue';
+import setMenuPermissionsDialog from './setMenuPermissionsDIalog.vue';
 import { getAllMenu } from '~/server/api/menu';
 import { getMenuPermissionsList } from '~/server/api/permissions';
 import type { MenuTree } from '~/types/menu';
@@ -53,6 +53,7 @@ const setPage = (pages: number, pageSizes: number): void => {
  */
 const getTreeData = async (): Promise<void> => {
   const res = await getAllMenu();
+  console.log(res);
   if (res.code == 200) {
     state.treeData = res.data;
     console.log(state.treeData);

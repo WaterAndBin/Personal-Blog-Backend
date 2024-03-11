@@ -37,7 +37,11 @@ const close = (): void => {
  */
 const setData = (roleId: string, data: string): void => {
   formData.role_id = roleId;
-  listsData.value = JSON.parse(data);
+  if (data == '') {
+    listsData.value = [];
+  } else {
+    listsData.value = JSON.parse(data);
+  }
   treeRef.value?.setCheckedKeys(listsData.value, false);
   show();
 };
@@ -50,6 +54,7 @@ const sure = async (): Promise<void> => {
   if (res.code == 200) {
     ElMessage.success('修改权限成功');
     emits('getData');
+    console.log();
     close();
   }
 };
