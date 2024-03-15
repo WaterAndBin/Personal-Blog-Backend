@@ -17,7 +17,7 @@ export interface UserListPagination {
 }
 
 /**
- * 角色列表
+ * 用户列表
  */
 export interface UserList {
   id: number; // 主键 id

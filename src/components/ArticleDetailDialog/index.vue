@@ -1,6 +1,7 @@
 <!-- 审核弹窗 -->
 <script lang="ts" setup>
 import type { ArticleDetail } from '~/types/article';
+import type { UserList } from '~/types/user';
 
 const show = ref(false);
 
@@ -31,7 +32,7 @@ const timerData = ref<ArticleDetail>({
   review_time: '',
   reject_reason: '',
   reject_type: 0,
-  author: {}
+  author: '' as any
 });
 
 const getDataShow = (data: ArticleDetail): void => {
@@ -45,17 +46,22 @@ defineExpose({ showDialog, getDataShow });
 
 <template>
   <el-dialog v-model="show" title="文章内容" width="700" :before-close="showDialog">
-    <div>
-      <!-- 作者 -->
-      <div class="mb-3 box-border">
-        <div class="text-center text-3xl">
-          {{ timerData.article_title }}
+    <div class="m-[3rem_auto] border-default box-border min-h-40 w-180 border-3 p-3">
+      <div>
+        <!-- 标题 -->
+        <div class="text-2xl font-semibold text-center">
+          <span>{{ timerData.article_title }}</span>
         </div>
-        <div class="mt-2 text-center">作者：{{ timerData.author.user_name ?? '' }}</div>
-        <div class="mt-2 text-center">发布时间：{{ timerData.created_time }}</div>
+        <!-- 作者的信息 -->
+        <div class="my-2 text-center font-semibold">
+          <span class="mx-1">作者：{{ timerData.author.user_name }}</span>
+          <span class="mx-1">发布时间：{{ timerData.created_time }}</span>
+        </div>
+        <!-- 文章的内容 -->
+        <div>
+          <div v-html="timerData.article_content"></div>
+        </div>
       </div>
-      <!-- 内容 -->
-      <div v-html="timerData.article_content"></div>
     </div>
   </el-dialog>
 </template>

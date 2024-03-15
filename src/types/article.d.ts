@@ -1,4 +1,4 @@
-import type { userList } from './user';
+import type { UserList } from './user';
 
 /**
  * 文章列表分页
@@ -39,7 +39,7 @@ export interface ArticleDetail {
   article_title: string;
   article_cover: string;
   article_content: string;
-  author: userList;
+  author: UserList;
   author_id: number;
   created_time: string;
   updated_time: string;
