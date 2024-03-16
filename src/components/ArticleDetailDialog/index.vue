@@ -1,7 +1,6 @@
 <!-- 审核弹窗 -->
 <script lang="ts" setup>
 import type { ArticleDetail } from '~/types/article';
-import type { UserList } from '~/types/user';
 
 const show = ref(false);
 

@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-const menu = useMenuData();
+const menuStore = useMenuStore();
 /* 请求菜单 */
-menu.getMenuData();
+menuStore.getMenuData();
 </script>
 
 <template>
-  <template v-if="menu.menuData.value.length != 0">
+  <template v-if="menuStore.menuData.length != 0">
     <el-sub-menu
-      v-for="(item, index) in menu.menuData.value"
+      v-for="(item, index) in menuStore.menuData"
       :key="item.id + index + item.menu_name"
       :index="item.id + index + item.menu_name"
       :router="true"

@@ -7,7 +7,7 @@ import { getAllMenu, updateMenu } from '~/server/api/menu';
 /* dom */
 const addMenuDialogRef = ref();
 const updateMenuDialogRef = ref();
-const useMenu = useMenuData();
+const menuStore = useMenuStore();
 
 /**
  * 初始数据
@@ -52,7 +52,7 @@ const updateStatus = async (data: MenuTree, status: number): Promise<void> => {
     } else {
       ElMessage.success('禁用成功');
     }
-    useMenu.getMenuData();
+    menuStore.getMenuData();
   }
 };
 
@@ -61,7 +61,7 @@ const deleteData = async (data: MenuTree): Promise<void> => {
   if (res.code == 200) {
     ElMessage.success('删除成功');
     getData();
-    useMenu.getMenuData();
+    menuStore.getMenuData();
   } else {
     ElMessage.error('删除失败');
   }

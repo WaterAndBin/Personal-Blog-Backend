@@ -5,7 +5,7 @@ import { updateMenu } from '~/server/api/menu';
 import type { MenuTree } from '~/types/menu';
 
 const show = ref(false);
-const useMenu = useMenuData();
+const menuStore = useMenuStore();
 
 const emit = defineEmits<{
   (event: 'getData'): void;
@@ -53,7 +53,7 @@ const submitForm = (formEl: FormInstance | undefined): void => {
       console.log(res);
       if (res.code == 200) {
         emit('getData');
-        useMenu.getMenuData();
+        menuStore.getMenuData();
         ElMessage.success('修改菜单成功');
         showDialog();
       } else {
