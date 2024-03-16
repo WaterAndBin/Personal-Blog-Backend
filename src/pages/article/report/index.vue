@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { articleStatus } from '../article';
-import { deleteMyArticle, getMyArticle } from '~/server/api/article';
+import { deleteMyArticle } from '~/server/api/article';
+import { getRejectArticleList } from '~/server/api/report';
 import type { ArticleList } from '~/types/article';
 
 /* dom */
@@ -24,7 +25,7 @@ const state = reactive({ ...initState });
 const getData = (): void => {
   state.loading = true;
   setTimeout(async () => {
-    const res = await getMyArticle(state.page, state.pageSize);
+    const res = await getRejectArticleList(state.page, state.pageSize);
     if (res.code == 200) {
       state.tableData = res.data.list;
       state.pageTotal = res.data.total;
