@@ -64,3 +64,12 @@ export async function deleteUser(id: number): Promise<{ code: number; message: s
     is_deleted: 1
   });
 }
+
+/**
+ * 获取个人信息
+ * @param data 角色的数据
+ * @returns
+ */
+export async function getMyInfo(): Promise<{ code: number; data: any; message: string }> {
+  return await http.post<{ code: number; data: any; message: string }>('/user/getMyInfo');
+}

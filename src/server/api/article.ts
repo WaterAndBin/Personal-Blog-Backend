@@ -68,3 +68,22 @@ export async function deleteMyArticle(id: number): Promise<{
     is_deleted: 1
   });
 }
+
+/**
+ * 获取举报列表
+ * @param page 当前页
+ * @param pageSize 页码大小
+ * @returns
+ */
+export async function getRejectReasonList(id: number): Promise<{
+  code: number;
+  data: any[];
+  message: string;
+}> {
+  return await http.post<{ code: number; data: any[]; message: string }>(
+    '/article/getRejectReasonList',
+    {
+      id
+    }
+  );
+}

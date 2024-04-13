@@ -43,7 +43,7 @@ export interface ArticleDetail {
   author_id: number;
   created_time: string;
   updated_time: string;
-  tabs_id: string | number[];
+  tabs_id: string;
   status: number;
   is_deleted: number;
   type: number;

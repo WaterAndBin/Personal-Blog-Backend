@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { articleStatus } from '../article';
+import rejectReason from './rejectReason.vue';
 import { deleteMyArticle } from '~/server/api/article';
 import { getRejectArticleList } from '~/server/api/report';
 import type { ArticleList } from '~/types/article';
 
 /* dom */
 const articleDetailDialogRef = ref();
+const rejectReasonRef = ref();
 
 /**
  * 初始数据
@@ -125,11 +127,13 @@ onMounted(() => {
                     >
                       文章详情
                     </el-button>
-                    <el-popconfirm title="确认删除吗？" @confirm="deleteData(scope.row.id)">
-                      <template #reference>
-                        <el-button>删除</el-button>
-                      </template>
-                    </el-popconfirm>
+                    <el-button
+                      type="primary"
+                      size="small"
+                      @click="rejectReasonRef.setData(scope.row.id)"
+                    >
+                      举报详情
+                    </el-button>
                   </div>
                 </template>
               </el-table-column>
@@ -149,5 +153,6 @@ onMounted(() => {
 
     <!-- 文章详情 -->
     <ArticleDetailDialog ref="articleDetailDialogRef"></ArticleDetailDialog>
+    <rejectReason ref="rejectReasonRef" />
   </LoadingPages>
 </template>

@@ -67,7 +67,7 @@ defineExpose({ showDialog, setData });
 </script>
 
 <template>
-  <el-dialog v-model="show" title="修改角色" width="500" :before-close="showDialog" align-center>
+  <el-dialog v-model="show" title="修改菜单" width="500" :before-close="showDialog" align-center>
     <el-form ref="formRef" :model="state" label-width="auto" class="demo-ruleForm">
       <el-form-item
         label="菜单名称"
@@ -94,7 +94,7 @@ defineExpose({ showDialog, setData });
         />
       </el-form-item>
       <el-form-item
-        label="菜单名称"
+        label="菜单父级"
         prop="menu_parent"
         :rules="[{ required: true, message: '缺少菜单父级' }]"
       >

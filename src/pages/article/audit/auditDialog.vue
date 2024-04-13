@@ -3,6 +3,7 @@
 import type { FormInstance } from 'element-plus';
 import { setAuditArticle } from '~/server/api/article';
 import type { AuditArticleStatus } from '~/types/article';
+import { rejectType } from '~/utils/common';
 
 const show = ref(false);
 
@@ -66,10 +67,9 @@ defineExpose({ showDialog, setData });
       </el-form-item>
       <el-form-item v-if="state.status == 3" label="不通过类型" prop="reject_type">
         <el-radio-group v-model="state.reject_type">
-          <el-radio :label="1">封面问题</el-radio>
-          <el-radio :label="2">标题问题</el-radio>
-          <el-radio :label="3">文章内容问题</el-radio>
-          <el-radio :label="4">其他问题</el-radio>
+          <el-radio v-for="(items, index) in rejectType" :key="index" :label="items.type">
+            {{ items.label }}
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="state.status == 3" label="不通过理由" prop="reject_reason">

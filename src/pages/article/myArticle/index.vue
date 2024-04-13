@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { articleStatus } from '../article';
 import { deleteMyArticle, getMyArticle } from '~/server/api/article';
+import { getMyInfo } from '~/server/api/user';
 import type { ArticleList } from '~/types/article';
 
 /* dom */
@@ -57,6 +58,13 @@ const deleteData = async (data: number): Promise<void> => {
     getData();
   } else {
     ElMessage.error('删除失败');
+  }
+};
+
+const getDetail = async (data: any): Promise<void> => {
+  const res = await getMyInfo();
+  if (res.code == 200) {
+    articleDetailDialogRef.value.getDataShow({ ...data, author: res.data });
   }
 };
 
@@ -117,11 +125,7 @@ onMounted(() => {
                 <template #default="scope">
                   <div class="flex-default">
                     <!-- <el-button type="primary" size="small" @click="">修改</el-button> -->
-                    <el-button
-                      type="primary"
-                      size="small"
-                      @click="articleDetailDialogRef.getDataShow(scope.row)"
-                    >
+                    <el-button type="primary" size="small" @click="getDetail(scope.row)">
                       文章详情
                     </el-button>
                     <el-popconfirm title="确认删除吗？" @confirm="deleteData(scope.row.id)">

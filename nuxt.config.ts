@@ -61,7 +61,7 @@ export default defineNuxtConfig({
   },
 
   /* css */
-  css: ['~/styles/reset.css', '~/styles/comment.css'],
+  css: ['~/styles/reset.css', '~/styles/comment.css', '~/styles/main.scss'],
 
   /* vue-tsc */
   typescript: {

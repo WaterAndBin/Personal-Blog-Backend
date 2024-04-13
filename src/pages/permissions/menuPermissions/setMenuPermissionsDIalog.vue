@@ -37,7 +37,12 @@ const close = (): void => {
  */
 const setData = (roleId: string, data: string): void => {
   formData.role_id = roleId;
-  if (data == '') {
+
+  // console.log('======');
+  // console.log(data);
+  console.log(props.treeData);
+
+  if (data == null || data == '') {
     listsData.value = [];
   } else {
     listsData.value = JSON.parse(data);
