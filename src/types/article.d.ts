@@ -61,4 +61,5 @@ export interface AuditArticleStatus {
   status: number;
   reject_type: number;
   reject_reason: string;
+  type?: number;
 }

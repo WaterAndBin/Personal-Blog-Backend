@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { articleStatus } from '../article';
 import rejectReason from './rejectReason.vue';
-import { deleteMyArticle } from '~/server/api/article';
-import { getRejectArticleList } from '~/server/api/report';
+import { getRejectArticleList } from '~/server/api/article';
 import type { ArticleList } from '~/types/article';
 
 /* dom */
@@ -53,15 +51,15 @@ const setPage = (pages: number, pageSizes: number): void => {
  * @param pages 获取的页码
  * @param pageSizes 页码的总数
  */
-const deleteData = async (data: number): Promise<void> => {
-  const res = await deleteMyArticle(data);
-  if (res.code == 200) {
-    ElMessage.success('删除成功');
-    getData();
-  } else {
-    ElMessage.error('删除失败');
-  }
-};
+// const deleteData = async (data: number): Promise<void> => {
+//   const res = await deleteMyArticle(data);
+//   if (res.code == 200) {
+//     ElMessage.success('删除成功');
+//     getData();
+//   } else {
+//     ElMessage.error('删除失败');
+//   }
+// };
 
 onMounted(() => {
   getData();
@@ -105,7 +103,7 @@ onMounted(() => {
                   <div v-else>-</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="updated_time" label="状态">
+              <!-- <el-table-column prop="updated_time" label="状态">
                 <template #default="scope">
                   <div>
                     {{
@@ -115,8 +113,8 @@ onMounted(() => {
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="reject_reason" label="不通过审核原因" />
-              <el-table-column fixed="right" label="操作" width="150" header-align="center">
+              <el-table-column prop="reject_reason" label="不通过审核原因" /> -->
+              <el-table-column fixed="right" label="操作" width="170" header-align="center">
                 <template #default="scope">
                   <div class="flex-default">
                     <!-- <el-button type="primary" size="small" @click="">修改</el-button> -->
@@ -153,6 +151,7 @@ onMounted(() => {
 
     <!-- 文章详情 -->
     <ArticleDetailDialog ref="articleDetailDialogRef"></ArticleDetailDialog>
-    <rejectReason ref="rejectReasonRef" />
+    <!-- 核实举报弹窗 -->
+    <rejectReason ref="rejectReasonRef" @get-data="getData" />
   </LoadingPages>
 </template>

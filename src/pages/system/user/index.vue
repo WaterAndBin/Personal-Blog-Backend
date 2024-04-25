@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import updateUserDialog from './updateUserDialog.vue';
+import addUserDialog from './addUserDialog.vue';
 import { getAllRole } from '~/server/api/role';
 import { getUserList, updateUser, deleteUser } from '~/server/api/user';
 import type { RoleList } from '~/types/role';
 import type { UserList } from '~/types/user';
 
 const updateRoleRef = ref();
+const addUserDialogRef = ref();
 
 /**
  * 初始数据
@@ -106,7 +108,11 @@ onMounted(() => {
       <div class="h-full w-full">
         <div class="text-2xl font-semibold">用户管理</div>
         <div class="w-full flex flex-col">
-          <div class="grid my-3 justify-items-end"></div>
+          <div class="grid my-3 justify-items-end">
+            <el-button type="primary" size="small" @click="addUserDialogRef.showDialog()">
+              添加用户
+            </el-button>
+          </div>
           <div class="">
             <el-table :data="state.tableData" border style="width: 100%">
               <el-table-column prop="id" label="用户id" />
@@ -173,10 +179,13 @@ onMounted(() => {
       </div>
     </div>
 
+    <!-- 更新用户 -->
     <updateUserDialog
       ref="updateRoleRef"
       :role-data="state.roleData"
       @get-Data="getData"
     ></updateUserDialog>
+    <!-- 新增用户 -->
+    <addUserDialog ref="addUserDialogRef" :role-data="state.roleData" @get-Data="getData" />
   </LoadingPages>
 </template>

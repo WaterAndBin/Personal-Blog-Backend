@@ -22,7 +22,7 @@ export async function getAuditArticleList(
 }
 
 /**
- * 添加角色
+ * 审核文章
  * @param data AuditArticleStatus
  * @returns
  */
@@ -70,20 +70,18 @@ export async function deleteMyArticle(id: number): Promise<{
 }
 
 /**
- * 获取举报列表
- * @param page 当前页
- * @param pageSize 页码大小
+ * 用户分页
+ * @param currentPage 当前页
+ * @param pageSize 页数量
  * @returns
  */
-export async function getRejectReasonList(id: number): Promise<{
-  code: number;
-  data: any[];
-  message: string;
-}> {
-  return await http.post<{ code: number; data: any[]; message: string }>(
-    '/article/getRejectReasonList',
-    {
-      id
-    }
-  );
+export async function getRejectArticleList(
+  page: number,
+  pageSize: number
+): Promise<{ code: number; data: any }> {
+  const res = await http.post<{ code: number; data: any }>('/article/getRejectArticleList', {
+    page,
+    pageSize
+  });
+  return res;
 }

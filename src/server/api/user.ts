@@ -73,3 +73,14 @@ export async function deleteUser(id: number): Promise<{ code: number; message: s
 export async function getMyInfo(): Promise<{ code: number; data: any; message: string }> {
   return await http.post<{ code: number; data: any; message: string }>('/user/getMyInfo');
 }
+
+/**
+ * 添加用户
+ * @param data 角色的数据
+ * @returns
+ */
+export async function addNewUser(data: any): Promise<{ code: number; message: string }> {
+  return await http.post<{ code: number; message: string }>('/user/addNewUser', {
+    ...data
+  });
+}

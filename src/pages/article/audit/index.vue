@@ -81,7 +81,7 @@ onMounted(() => {
               </el-table-column>
               <el-table-column prop="article_title" label="文章标题" />
               <el-table-column prop="created_time" label="发布时间" />
-              <el-table-column fixed="right" label="操作" width="150" header-align="center">
+              <el-table-column fixed="right" label="操作" header-align="center">
                 <template #default="scope">
                   <div class="flex-default">
                     <el-button

@@ -44,6 +44,7 @@ const setPage = (pages: number, pageSizes: number): void => {
   state.page = pages;
   state.pageSize = pageSizes;
   getData();
+  deleteData(pages);
 };
 
 /**
@@ -110,7 +111,7 @@ onMounted(() => {
                   <div v-else>-</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="updated_time" label="状态">
+              <el-table-column label="审核状态">
                 <template #default="scope">
                   <div>
                     {{
@@ -120,7 +121,37 @@ onMounted(() => {
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="reject_reason" label="不通过审核原因" />
+              <el-table-column prop="reject_reason" label="不通过审核原因">
+                <template #default="scope">
+                  <div class="text-center">
+                    <div v-if="scope.row.reject_type == -1">-</div>
+                    <div v-else>
+                      <div>
+                        {{
+                          rejectType.find((items) => items.type == scope.row.reject_type)?.label ??
+                          '未知错误'
+                        }}
+                      </div>
+                      <div>
+                        <span v-if="!scope.row.reject_reason">-</span>
+                        <span v-else>{{ scope.row.reject_reason }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </el-table-column>
+              <!-- <el-table-column prop="reject_reason" label="禁用">
+                <template #default="scope">
+                  <div class="flex">
+                    <template>
+                      <el-button type="primary" @click="getDetail(scope.row)">禁用</el-button>
+                    </template>
+                    <template>
+                      <el-button type="warning" @click="getDetail(scope.row)">开启</el-button>
+                    </template>
+                  </div>
+                </template>
+              </el-table-column> -->
               <el-table-column fixed="right" label="操作" width="150" header-align="center">
                 <template #default="scope">
                   <div class="flex-default">
