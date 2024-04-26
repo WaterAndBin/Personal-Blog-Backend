@@ -2,6 +2,8 @@
 import { setMenuPermissions } from '~/server/api/permissions';
 import type { MenuTree } from '~/types/menu';
 
+const menuStore = useMenuStore();
+
 /* 是否隐藏 */
 const dialogHidden = ref<boolean>(false);
 /* 传进来的数据 */
@@ -61,6 +63,7 @@ const sure = async (): Promise<void> => {
     emits('getData');
     console.log();
     close();
+    menuStore.getMenuData();
   }
 };
 
