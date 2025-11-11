@@ -1,4 +1,4 @@
-import http from '~/server';
+import http from '~/api';
 import type { AuditArticleStatus } from '~/types/article';
 
 /**

@@ -1,6 +1,6 @@
 <!-- 审核弹窗 -->
 <script lang="ts" setup>
-import { getAllTabs } from '~/server/api/tabs';
+import { getAllTabs } from '~/api/api/tabs';
 import type { ArticleDetail } from '~/types/article';
 
 const show = ref(false);

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { setMenuPermissions } from '~/server/api/permissions';
+import { setMenuPermissions } from '~/api/api/permissions';
 import type { MenuTree } from '~/types/menu';
 
 const menuStore = useMenuStore();

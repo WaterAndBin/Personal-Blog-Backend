@@ -1,7 +1,7 @@
 <!-- 修改角色 -->
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { updateTabs } from '~/server/api/tabs';
+import { updateTabs } from '~/api/api/tabs';
 import type { TabsList } from '~/types/tabs';
 
 const show = ref(false);

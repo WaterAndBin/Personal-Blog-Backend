@@ -1,7 +1,7 @@
 <!-- 修改角色 -->
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { addNewUser } from '~/server/api/user';
+import { addNewUser } from '~/api/api/user';
 import type { RoleList } from '~/types/role';
 
 const show = ref(false);

@@ -1,4 +1,4 @@
-import { getMenu } from '~/server/api/menu';
+import { getMenu } from '~/api/api/menu';
 import type { MenuTree } from '~/types/menu';
 
 /* 用户的仓库 */

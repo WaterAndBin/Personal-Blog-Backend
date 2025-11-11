@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { userLogin } from '~/server/api/user';
+import { userLogin } from '~/api/api/user';
 import type { UserAccount } from '~/types/user';
 
 /* dom结构 */

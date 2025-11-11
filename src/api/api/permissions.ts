@@ -1,5 +1,5 @@
 /* 权限 */
-import http from '~/server';
+import http from '~/api';
 import type { MenuPermissionsListPagination } from '~/types/permissions';
 
 /**

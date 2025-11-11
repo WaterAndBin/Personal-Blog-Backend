@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { addMenu } from '~/server/api/menu';
+import { addMenu } from '~/api/api/menu';
 import type { AddMenu } from '~/types/menu';
 
 const show = ref(false);

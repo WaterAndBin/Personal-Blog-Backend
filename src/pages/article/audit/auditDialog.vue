@@ -1,7 +1,7 @@
 <!-- 修改角色 -->
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { setAuditArticle } from '~/server/api/article';
+import { setAuditArticle } from '~/api/api/article';
 import type { AuditArticleStatus } from '~/types/article';
 import { rejectType } from '~/utils/common';
 

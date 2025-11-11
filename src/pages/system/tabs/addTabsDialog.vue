@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
 // import { addRole } from '~/server/api/role';
-import { addTabs } from '~/server/api/tabs';
+import { addTabs } from '~/api/api/tabs';
 
 const show = ref(false);
 

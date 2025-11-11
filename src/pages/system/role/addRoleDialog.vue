@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { addRole } from '~/server/api/role';
+import { addRole } from '~/api/api/role';
 
 const show = ref(false);
 

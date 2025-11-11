@@ -1,7 +1,7 @@
 <!-- 修改角色 -->
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { updateRole } from '~/server/api/role';
+import { updateRole } from '~/api/api/role';
 import type { RoleList } from '~/types/role';
 
 const show = ref(false);

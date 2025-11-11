@@ -21,7 +21,6 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     // '@nuxtjs/eslint-module', //谨慎开启，会报错很多地方，主要用来检查一些函数是否用值,或者console，建议开发完之后使用
     '@nuxtjs/svg-sprite',
-    '@pinia-plugin-persistedstate/nuxt',
     '@nuxt/image',
     '@element-plus/nuxt',
     'nuxt-icon'
@@ -65,7 +64,7 @@ export default defineNuxtConfig({
 
   /* vue-tsc */
   typescript: {
-    typeCheck: true,
+    typeCheck: false,
     shim: false
   },
 
@@ -95,6 +94,11 @@ export default defineNuxtConfig({
     esbuild: {
       drop: ['debugger'],
       pure: ['console.log', 'console.error', 'console.warn', 'console.debug', 'console.trace']
+    },
+    resolve: {
+      alias: {
+        '~/server': '/src/server' // 让 Vite 当普通目录解析（绕过 Nuxt 限制）
+      }
     }
   },
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { articleStatus } from '../article';
-import { deleteMyArticle, getMyArticle } from '~/server/api/article';
-import { getMyInfo } from '~/server/api/user';
+import { deleteMyArticle, getMyArticle } from '~/api/api/article';
+import { getMyInfo } from '~/api/api/user';
 import type { ArticleList } from '~/types/article';
 
 /* dom */

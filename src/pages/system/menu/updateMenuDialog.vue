@@ -1,7 +1,7 @@
 <!-- 修改角色 -->
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { updateMenu } from '~/server/api/menu';
+import { updateMenu } from '~/api/api/menu';
 import type { MenuTree } from '~/types/menu';
 
 const show = ref(false);

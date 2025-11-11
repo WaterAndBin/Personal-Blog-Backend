@@ -1,7 +1,7 @@
 <!-- 修改角色 -->
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus';
-import { handleRejectReasonList } from '~/server/api/report';
+import { handleRejectReasonList } from '~/api/api/report';
 import type { AuditArticleStatus } from '~/types/article';
 import { rejectType } from '~/utils/common';
 

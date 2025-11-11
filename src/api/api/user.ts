@@ -1,4 +1,4 @@
-import http from '~/server';
+import http from '~/api';
 import type { UserAccount, UserList, UserListPagination } from '~/types/user';
 
 /**
